@@ -1,0 +1,6 @@
+[submodule "carddecks"]
+	path = carddecks
+	url = git@github.com:diogocsc/carddecks.git
+[submodule "carddecks_game"]
+	path = carddecks_game
+	url = git@github.com:diogocsc/carddecks_game.git
