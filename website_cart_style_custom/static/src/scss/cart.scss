@@ -1,0 +1,153 @@
+/**
+ * Custom Cart Summary Styling
+ * Version: 1.0.0
+ * Description: Provides custom styling for the e-commerce cart summary page
+ */
+
+// Main Cart Table
+
+.custom-cart-summary {
+    margin-bottom: 0;
+
+    // Cart Line Item
+    .cart-line {
+        background-color: #fff;
+    }
+
+    .cart-line-wrapper {
+        padding: 1rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+}
+
+// Product Information Layout
+
+.custom-cart-summary {
+    // Main Product Section
+    .product-main {
+        align-items: flex-start;
+        margin-bottom: 0.5rem;
+    }
+
+    // Product Image Container
+    .td-img {
+        width: 64px;
+        min-width: 64px;
+        height: 64px;
+    }
+
+    // Product Image
+    .o_image_64_max {
+        max-width: 64px;
+        max-height: 64px;
+        object-fit: contain;
+    }
+
+    // Product Name
+    .td-product_name {
+        padding: {
+            left: 1rem;
+            top: 0.25rem;
+        }
+    }
+
+    // Product Details Layout
+    .product-details {
+        margin-left: 76px; // 64px (image width) + 12px (margin)
+    }
+}
+
+// Typography and Labels
+
+.custom-cart-summary {
+    .detail-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .detail-value {
+        color: #212529;
+    }
+
+    // Price Display
+    .price-section {
+        min-width: 120px;
+    }
+}
+
+// Mobile Cart Header
+
+.mobile-cart-container {
+    margin: 0 1rem;
+    
+    .mobile-cart-link {
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        // Cart Icon
+        .fa-shopping-cart {
+            font-size: 1.25rem;
+            color: #333;
+        }
+        
+        // Quantity Badge
+        .cart-quantity {
+            top: 0;
+            right: 0;
+            transform: translate(25%, -25%);
+            font-size: 0.75rem;
+            min-width: 18px;
+            height: 18px;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
+// Mobile View Adjustments
+@media (max-width: 767.98px) {
+    .custom-cart-summary {
+        .product-details {
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 76px;
+        }
+        
+        .price-section {
+            align-self: flex-start;
+        }
+    }
+}
+
+// Tablet and Desktop Breakpoints
+@media (min-width: 992px) {
+    .mobile-cart-container {
+        display: none !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    // Hide desktop cart in mobile view
+    #top_menu_collapse .o_wsale_my_cart {
+        display: none !important;
+    }
+    
+    // Mobile cart positioning
+    .mobile-cart-container {
+        order: 2;
+    }
+    
+    // Hamburger menu positioning
+    .navbar-toggler {
+        order: 3;
+        margin-left: 0;
+    }
+}
+
+

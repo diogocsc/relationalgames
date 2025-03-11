@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+    ========================================================================
+    Custom Cart Summary Template
+    ========================================================================
+    Inherits: website_sale.cart_summary
+    Purpose: Provides a customized layout for the shopping cart summary page
+    -->
+    <template id="custom_cart_summary" inherit_id="website_sale.cart_summary">
+        <!-- Replace the entire cart products table with custom styling -->
+        <xpath expr="//table[@id='cart_products']" position="replace">
+            <table class="table table-sm custom-cart-summary" 
+                   id="cart_products" 
+                   t-if="website_sale_order and website_sale_order.website_order_line">
+                <tbody>
+                    <!-- Iterate through each order line -->
+                    <tr t-foreach="website_sale_order.website_order_line" 
+                        t-as="line" 
+                        class="cart-line">
+                        <td class="cart-line-wrapper">
+                            <!-- Product Information Container -->
+                            <div class="product-container">
+                                <!-- Product Main Information Section -->
+                                <div class="product-main d-flex">
+                                    <!-- Product Image -->
+                                    <div class="td-img text-center me-3">
+                                        <!-- Handle non-sellable products -->
+                                        <span t-if="line._is_not_sellable_line() and line.product_id.image_128">
+                                            <img t-att-src="image_data_uri(line.product_id.image_128)" 
+                                                 class="img o_image_64_max rounded" 
+                                                 t-att-alt="line.name_short"/>
+                                        </span>
+                                        <!-- Handle sellable products -->
+                                        <span t-else=""
+                                              t-field="line.product_id.image_128"
+                                              t-options="{'widget': 'image', 'qweb_img_responsive': False, 'class': 'rounded o_image_64_max'}"
+                                        />
+                                    </div>
+                                    <!-- Product Name -->
+                                    <div class="td-product_name">
+                                        <strong t-field="line.name_short"/>
+                                    </div>
+                                </div>
+
+                                <!-- Product Details Section -->
+                                <div class="product-details d-flex justify-content-between px-4 mt-2">
+                                    <!-- Quantity Information -->
+                                    <div class="quantity-section">
+                                        <span class="detail-label text-muted">Quantity:</span>
+                                        <span class="detail-value ms-1" t-esc="line.product_uom_qty"/>
+                                        <!-- Display warning if applicable -->
+                                        <t t-if='line._get_shop_warning(clear=False)'>
+                                            <i class='fa fa-warning text-warning ms-2' 
+                                               t-att-title="line._get_shop_warning()" 
+                                               role="img" 
+                                               aria-label="Warning"/>
+                                        </t>
+                                    </div>
+                                    <!-- Price Information -->
+                                    <div class="price-section text-end">
+                                        <span class="detail-label text-muted">Price:</span>
+                                        <span class="detail-value ms-1">
+                                            <!-- Price excluding tax -->
+                                            <span t-field="line.price_reduce_taxexcl" 
+                                                  style="white-space: nowrap;" 
+                                                  t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" 
+                                                  groups="account.group_show_line_subtotals_tax_excluded"/>
+                                            <!-- Price including tax -->
+                                            <span t-field="line.price_reduce_taxinc" 
+                                                  style="white-space: nowrap;" 
+                                                  t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" 
+                                                  groups="account.group_show_line_subtotals_tax_included"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+
+
+    <!--
+    ========================================================================
+    Mobile Cart Header Template
+    ========================================================================
+    Inherits: website.template_header_default
+    Purpose: Implements responsive cart display for mobile and desktop views
+    -->
+    <template id="mobile_cart_header" inherit_id="website.template_header_default">
+        <!-- Mobile Cart Icon Implementation -->
+        <xpath expr="//t[@t-call='website.navbar_toggler']" position="before">
+            <div class="d-lg-none align-items-center mobile-cart-container order-2">
+                <a href="/shop/cart" class="nav-link mobile-cart-link position-relative">
+                    <i class="fa fa-shopping-cart"/>
+                    <!-- Cart Quantity Badge -->
+                    <t t-set="website_sale_cart_quantity" 
+                       t-value="request.session.get('website_sale_cart_quantity', 0) if request.session.get('website_sale_cart_quantity') else website.sale_get_order().cart_quantity or 0"/>
+                    <sup t-if="website_sale_cart_quantity" 
+                         class="my_cart_quantity badge text-bg-primary cart-quantity position-absolute o_wsale_cart_quantity" 
+                         t-att-data-order-id="request.session.get('sale_order_id', '')"
+                         t-esc="website_sale_cart_quantity"/>
+                </a>
+            </div>
+        </xpath>
+        
+        <!-- Desktop Cart Implementation -->
+        <xpath expr="//t[@t-call='website_sale.header_cart_link']" position="replace">
+            <t t-call="website_sale.header_cart_link">
+                <t t-set="_icon" t-value="True"/>
+                <t t-set="_item_class" t-value="'nav-item d-none d-lg-block ms-lg-3'"/>
+                <t t-set="_link_class" t-value="'nav-link'"/>
+            </t>
+        </xpath>
+    </template>
+    
+</odoo>
