@@ -22,4 +22,5 @@
         "demo/barcode_rule.xml",
         "demo/product_packaging.xml",
     ],
+    'installable': True,
 }

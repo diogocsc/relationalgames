@@ -22,4 +22,5 @@
     ],
     "demo": ["demo/res_users.xml"],
     "external_dependencies": {"python": ["python-barcode"]},
+    'installable': True,
 }

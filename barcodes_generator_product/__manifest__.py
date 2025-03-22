@@ -20,4 +20,6 @@
         "demo/barcode_rule.xml",
         "demo/product.xml",
     ],
+    'installable': True,
+
 }
