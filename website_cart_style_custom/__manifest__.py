@@ -23,7 +23,7 @@
     # Frontend asset management
     'assets': {
         'web.assets_frontend': [
-            'custom_checkout/static/src/scss/cart.scss',  # Custom cart styling
+            'website_cart_style_custom/static/src/scss/cart.scss',  # Custom cart styling
         ],
     },
     
